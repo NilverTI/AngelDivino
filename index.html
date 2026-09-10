@@ -665,23 +665,422 @@
             color: var(--brand-teal);
         }
 
-        /* RESPONSIVIDAD */
+        /* =========================================================
+           SISTEMA RESPONSIVE AVANZADO & ULTRA ORDENADO
+           ========================================================= */
+
+        /* 1. Monitores ultra-anchos y pantallas 2K / 4K */
+        @media (min-width: 1441px) {
+            main.main-viewport {
+                max-width: 1560px;
+                padding: 12px 64px;
+                gap: 60px;
+            }
+            .panel-title {
+                font-size: 2.35rem;
+            }
+            .panel-lead {
+                font-size: 0.95rem;
+            }
+            .editorial-panel {
+                padding: 38px 44px;
+            }
+        }
+
+        /* 2. Laptops estándar y pantallas medianas (1025px - 1366px) */
+        @media (max-width: 1366px) and (min-width: 1025px) {
+            header {
+                padding: 0 36px;
+            }
+            main.main-viewport {
+                padding: 8px 36px;
+                gap: 32px;
+            }
+            .panel-title {
+                font-size: 1.95rem;
+            }
+            .editorial-panel {
+                padding: 26px 30px;
+            }
+            .service-metrics-row {
+                padding: 12px 14px;
+                margin-bottom: 16px;
+            }
+            .bus-svg {
+                max-height: 38vh;
+            }
+        }
+
+        /* 3. Laptops con altura vertical reducida (ej. 1366x768 / 1280x800) */
+        @media (min-width: 1025px) and (max-height: 750px) {
+            header {
+                height: 50px;
+                padding: 0 32px;
+            }
+            main.main-viewport {
+                padding: 4px 32px;
+                gap: 28px;
+            }
+            .col-bus {
+                padding-top: 6px;
+            }
+            .bus-svg {
+                max-height: 32vh;
+            }
+            .highway-track {
+                height: 20px;
+                margin-top: -8px;
+            }
+            .route-stops {
+                margin-top: 10px;
+                gap: 6px;
+            }
+            .stop-chip {
+                padding: 3px 8px;
+                font-size: 0.68rem;
+            }
+            .editorial-panel {
+                padding: 20px 26px;
+                border-radius: 14px;
+            }
+            .panel-header-status {
+                margin-bottom: 12px;
+                padding-bottom: 8px;
+            }
+            .panel-title {
+                font-size: 1.7rem;
+                margin-bottom: 8px;
+            }
+            .panel-lead {
+                font-size: 0.82rem;
+                line-height: 1.5;
+                margin-bottom: 14px;
+            }
+            .service-metrics-row {
+                padding: 10px 12px;
+                margin-bottom: 14px;
+                gap: 8px;
+            }
+            .metric-cell .m-title {
+                font-size: 0.6rem;
+            }
+            .metric-cell .m-data {
+                font-size: 0.76rem;
+            }
+            .agency-official-card {
+                margin-bottom: 14px;
+                gap: 4px;
+            }
+            .agency-item {
+                font-size: 0.7rem;
+            }
+            .timer-strip {
+                padding-top: 12px;
+            }
+            .timer-digit-card {
+                min-width: 38px;
+                padding: 4px 3px;
+            }
+            .timer-digit-card .num {
+                font-size: 0.95rem;
+            }
+            footer {
+                height: 36px;
+                padding: 0 32px;
+            }
+        }
+
+        /* 4. Tablets en orientación horizontal y vertical (769px - 1024px) */
         @media (max-width: 1024px) {
             html, body {
                 height: auto;
                 min-height: 100vh;
+                overflow-x: hidden;
                 overflow-y: auto;
             }
+
+            header {
+                padding: 0 28px;
+                height: 56px;
+            }
+
+            nav.nav-bar {
+                display: none; /* Simplificado para dar prioridad al contenido principal */
+            }
+
             main.main-viewport {
                 flex-direction: column;
-                padding: 24px;
-                gap: 28px;
+                padding: 24px 28px 40px;
+                gap: 32px;
+                align-items: center;
             }
-            .col-bus, .col-editorial {
+
+            .col-bus {
+                width: 100%;
+                max-width: 660px;
+                padding-top: 8px;
+            }
+
+            .bus-rig {
+                max-width: 100%;
+            }
+
+            .bus-svg {
+                max-height: none;
                 width: 100%;
             }
-            nav.nav-bar {
+
+            .highway-track {
+                max-width: 100%;
+            }
+
+            .col-editorial {
+                width: 100%;
+                max-width: 660px;
+            }
+
+            .editorial-panel {
+                padding: 28px 32px;
+            }
+
+            footer {
+                height: auto;
+                padding: 14px 28px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+        }
+
+        /* 5. Teléfonos móviles grandes y tablets pequeñas (481px - 768px) */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+                height: 54px;
+            }
+
+            .header-tag {
+                padding: 3px 10px;
+                font-size: 0.65rem;
+            }
+
+            main.main-viewport {
+                padding: 16px 20px 36px;
+                gap: 26px;
+            }
+
+            .col-bus, .col-editorial {
+                max-width: 100%;
+            }
+
+            .panel-title {
+                font-size: 1.7rem;
+                letter-spacing: -0.5px;
+            }
+
+            .panel-lead {
+                font-size: 0.84rem;
+                margin-bottom: 18px;
+            }
+
+            .service-metrics-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 12px 14px;
+            }
+
+            .service-metrics-row .metric-cell:last-child {
+                grid-column: span 2;
+                border-top: 1px solid var(--border-subtle);
+                padding-top: 8px;
+                margin-top: 2px;
+            }
+
+            .timer-strip {
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+                padding: 14px 20px;
+            }
+
+            footer .f-left {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            footer .f-right {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .f-sep {
                 display: none;
+            }
+        }
+
+        /* 6. Teléfonos móviles estándar y compactos (hasta 480px) */
+        @media (max-width: 480px) {
+            header {
+                padding: 0 14px;
+                height: 52px;
+            }
+
+            .logo-wrap {
+                gap: 9px;
+            }
+
+            .brand-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .brand-line-top .main {
+                font-size: 0.96rem;
+            }
+
+            .brand-line-top .script {
+                font-size: 0.88rem;
+            }
+
+            .brand-line-sub {
+                font-size: 0.52rem;
+                letter-spacing: 1.5px;
+            }
+
+            .header-tag {
+                padding: 3px 8px;
+                font-size: 0.62rem;
+                gap: 5px;
+            }
+
+            .header-tag span:not(.dot) {
+                display: none;
+            }
+
+            .header-tag::after {
+                content: 'En desarrollo';
+            }
+
+            main.main-viewport {
+                padding: 12px 14px 30px;
+                gap: 22px;
+            }
+
+            .bus-motion-wrap {
+                animation-duration: 0.8s;
+            }
+
+            .route-stops {
+                gap: 5px;
+                margin-top: 12px;
+            }
+
+            .stop-chip {
+                padding: 3px 7px;
+                font-size: 0.66rem;
+            }
+
+            .editorial-panel {
+                padding: 20px 18px;
+                border-radius: 14px;
+            }
+
+            .panel-header-status {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                margin-bottom: 14px;
+            }
+
+            .panel-title {
+                font-size: 1.45rem;
+                line-height: 1.2;
+                letter-spacing: -0.4px;
+                margin-bottom: 10px;
+            }
+
+            .panel-lead {
+                font-size: 0.8rem;
+                line-height: 1.55;
+                margin-bottom: 16px;
+            }
+
+            .service-metrics-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 10px 12px;
+                margin-bottom: 16px;
+            }
+
+            .service-metrics-row .metric-cell:last-child {
+                grid-column: auto;
+                border-top: 1px solid var(--border-subtle);
+                padding-top: 6px;
+            }
+
+            .agency-official-card {
+                margin-bottom: 16px;
+                gap: 6px;
+            }
+
+            .agency-item {
+                flex-direction: column;
+                gap: 2px;
+                font-size: 0.72rem;
+            }
+
+            .agency-item .city-tag {
+                font-size: 0.64rem;
+            }
+
+            .timer-strip {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 12px;
+                padding-top: 14px;
+            }
+
+            .timer-meta {
+                align-items: center;
+            }
+
+            .timer-numbers-group {
+                gap: 4px;
+            }
+
+            .timer-digit-card {
+                min-width: 36px;
+                padding: 5px 2px;
+            }
+
+            .timer-digit-card .num {
+                font-size: 0.92rem;
+            }
+
+            .timer-digit-card .txt {
+                font-size: 0.48rem;
+            }
+
+            .timer-divider {
+                font-size: 0.8rem;
+                margin-bottom: 4px;
+            }
+
+            footer {
+                padding: 14px 14px;
+                font-size: 0.68rem;
+            }
+
+            .dev-signature {
+                font-size: 0.68rem;
+                padding: 4px 10px;
             }
         }
     </style>
