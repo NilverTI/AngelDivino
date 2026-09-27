@@ -1,0 +1,35 @@
+<!--
+   ___  _____    ___
+  /   ||  _  |  /   | _
+ / /| || |/' | / /| |(_)
+/ /_| ||  /| |/ /_| |
+\_CONEXIÓN INESTABLE| _
+    |_/ \___/     |_/(_)
+
+    https://angeldivinopsv.vercel.app/
+ -->
+
+<section class="section section-soft routes-section reveal" id="rutas">
+    <div class="container">
+        <div class="section-heading routes-heading">
+            <p class="chip">Mapa de Rutas</p>
+            <h2>Rutas <span class="about-title-highlight">activas</span> del servidor</h2>
+            <p class="routes-subtitle">Explora nuestras rutas interprovinciales. Presiona un viaje para ver su detalle.</p>
+        </div>
+        <div class="routes-layout">
+            <article class="map-card">
+                <div class="map-frame" id="routeMapFrame" style="height: 500px; width: 100%; border-radius: 10px; overflow: hidden;">
+                    <div id="routeMapCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;"></div>
+                </div>
+                <!-- <p class="hint">Rutas visualizadas según la última actividad registrada en las últimas 72 horas. Puedes acercar y arrastrar el mapa interactivo.</p> -->
+            </article>
+            <article class="route-info-card">
+                <div class="route-indicator">
+                    <span class="pulse"></span>
+                    <strong id="routeIndicator">Rutas activas en vivo</strong>
+                </div>
+                <div id="routeList" class="route-list"></div>
+            </article>
+        </div>
+    </div>
+</section>

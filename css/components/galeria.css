@@ -1,0 +1,533 @@
+/* ==========================================================================
+   GALERÍA Y LIGHTBOX - ESTILOS
+   ========================================================================== */
+
+/* --------------- Contenedor Base de Galería --------------- */
+.page-main-pad {
+    padding-top: 5rem;
+}
+
+.galeria-section {
+    position: relative;
+    z-index: 10;
+}
+
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem 0 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.galeria-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    /* Mantener formato ancho */
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s var(--ease-out-back), box-shadow 0.3s var(--ease-out-back);
+    background-color: var(--surface-light);
+}
+
+.galeria-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: transform;
+}
+
+/* Efectos de Hover */
+.galeria-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.galeria-item:hover .galeria-img {
+    transform: scale(1.05);
+}
+
+.galeria-item::after {
+    content: "Ver completa";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: rgba(31, 199, 182, 0.65);
+    color: var(--text-inverse);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.galeria-item:hover::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* --------------- Controles Admin CRUD --------------- */
+.galeria-admin-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.galeria-item:hover .galeria-admin-controls {
+    opacity: 1;
+}
+
+.admin-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    color: #333;
+}
+
+.admin-btn:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.admin-btn.btn-delete {
+    color: #e53e3e;
+}
+.admin-btn.btn-delete:hover {
+    background: #fff5f5;
+}
+
+.admin-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* --------------- Lightbox (Visor de Imagen) --------------- */
+.lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 12, 16, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+
+.lightbox-content {
+    position: relative;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Permite click through al backdrop fuera de botones y wrapper */
+}
+
+.lightbox-wrapper {
+    position: relative;
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.lightbox-img-full {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    /* Transición manejada por JS */
+}
+
+/* Botones del Lightbox */
+.lightbox-btn {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-inverse);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    pointer-events: auto;
+    z-index: 10001;
+}
+
+.lightbox-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.lightbox-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+.lightbox-btn:active {
+    transform: scale(0.95);
+}
+
+.lightbox-prev {
+    left: 2rem;
+}
+
+.lightbox-next {
+    right: 2rem;
+}
+
+.lightbox-close {
+    top: 2rem;
+    right: 2rem;
+}
+
+/* --------------- Responsive --------------- */
+@media (max-width: 768px) {
+    .galeria-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .lightbox-prev {
+        left: 0.5rem;
+    }
+
+    .lightbox-next {
+        right: 0.5rem;
+    }
+
+    .lightbox-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .lightbox-btn {
+        width: 44px;
+        height: 44px;
+        background: rgba(0, 0, 0, 0.4);
+        border: none;
+    }
+
+    .lightbox-btn:hover {
+        background: rgba(0, 0, 0, 0.6);
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .galeria-grid {
+        grid-template-columns: 1fr;
+        /* Una columna en pantallas muy estrechas */
+    }
+
+    /* En móvil, los botones de navegeción pueden ocultarse si decidimos usar puro swipe, 
+       pero por accesibilidad los dejamos semitransparentes */
+}
+
+/* --------------- Upload Modal --------------- */
+.upload-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.upload-modal.visible {
+    opacity: 1; visibility: visible;
+}
+.upload-backdrop {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(10, 12, 16, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+.upload-box {
+    position: relative; z-index: 10000;
+    width: 90%; max-width: 500px;
+    background: #ffffff;
+    color: #333333;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
+}
+.upload-modal.visible .upload-box {
+    transform: scale(1) translateY(0);
+}
+.upload-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #ebebeb;
+}
+.upload-header h3 {
+    margin: 0; font-size: 1.25rem; font-weight: 600; color: #111;
+}
+.upload-close {
+    background: none; border: none; color: #888;
+    font-size: 1.5rem; cursor: pointer; line-height: 1;
+    transition: color 0.2s ease;
+}
+.upload-close:hover { color: #111; }
+.upload-body { padding: 1.5rem; }
+.upload-dropzone {
+    border: 2px dashed #cccccc;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+.upload-dropzone.dragover, .upload-dropzone:hover {
+    border-color: var(--orange, #6b3fa0);
+    background: rgba(107, 63, 160, 0.05);
+}
+.upload-icon {
+    width: 48px; height: 48px;
+    color: #aaaaaa;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
+}
+.upload-dropzone.dragover .upload-icon, .upload-dropzone:hover .upload-icon {
+    color: var(--orange, #6b3fa0);
+}
+.upload-dropzone p {
+    margin: 0; color: #666666; font-size: 0.95rem;
+}
+.upload-browse { color: var(--orange, #6b3fa0); font-weight: 500; }
+.upload-preview {
+    margin-top: 1.5rem; position: relative;
+    border-radius: 8px; overflow: hidden;
+    background: #f0f0f0;
+}
+.upload-preview.hidden { display: none; }
+.upload-preview img {
+    width: 100%; max-height: 250px; object-fit: contain; display: block;
+}
+.remove-preview {
+    position: absolute; top: 0.5rem; right: 0.5rem;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(0,0,0,0.6); color: #fff;
+    border: none; font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.remove-preview:hover { background: rgba(255, 0, 0, 0.8); }
+.upload-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #ebebeb;
+    display: flex; justify-content: flex-end;
+}
+
+/* Nuevos inputs del modal blanco */
+.upload-input-group {
+    margin-top: 1rem;
+    text-align: left;
+}
+.upload-input-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: #444;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.upload-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #1a202c;
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    margin-bottom: 1rem;
+}
+.upload-input:focus {
+    outline: none;
+    border-color: var(--orange, #6b3fa0);
+}
+.upload-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #1a202c;
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+.upload-textarea:focus {
+    outline: none;
+    border-color: var(--orange, #6b3fa0);
+}
+
+/* --------------- Login Modal --------------- */
+.login-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 10005;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.login-modal.visible {
+    opacity: 1; visibility: visible;
+}
+.login-backdrop {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(5, 5, 10, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+.login-box {
+    position: relative; z-index: 10006;
+    width: 90%; max-width: 380px;
+    background: #23242A; /* Color sólido oscuro */
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    /* Contorno naranja desenfocado y sombra profunda */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(107, 63, 160, 0.25), inset 0 0 0 1px rgba(107, 63, 160, 0.2);
+    display: flex; flex-direction: column; align-items: center;
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
+}
+.login-modal.visible .login-box {
+    transform: scale(1);
+}
+.login-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: none; color: rgba(255,255,255,0.4);
+    font-size: 1.5rem; cursor: pointer; line-height: 1;
+    transition: color 0.2s ease;
+}
+.login-close:hover { color: #fff; }
+.login-avatar {
+    width: 100px; height: 100px;
+    background: rgba(107, 63, 160, 0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    /* Contorno naranja desenfocado en el avatar */
+    box-shadow: 0 0 20px rgba(107, 63, 160, 0.4), inset 0 0 10px rgba(107, 63, 160, 0.3);
+    border: 2px solid rgba(107, 63, 160, 0.4);
+}
+.login-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+.login-form {
+    width: 100%;
+}
+.login-input-group {
+    display: flex; align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+.login-input-group:focus-within {
+    border-bottom-color: var(--orange, #6b3fa0);
+}
+.login-input-group svg {
+    width: 20px; height: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-right: 12px;
+}
+.login-input-group input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: #fff; font-size: 1.05rem; padding: 0.8rem 0;
+    font-family: inherit;
+}
+.login-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+.login-submit-btn {
+    width: 100%; margin-top: 1.5rem;
+    background: var(--orange, #6b3fa0);
+    border: none; border-radius: 8px;
+    padding: 1rem; font-size: 1.1rem; font-weight: 700;
+    color: #fff; cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 15px rgba(107, 63, 160, 0.2);
+}
+.login-submit-btn:hover {
+    transform: translateY(-2px);
+    background: #512c82;
+}
+.upload-submit-btn:disabled {
+    opacity: 0.5; cursor: not-allowed; filter: grayscale(1);
+}

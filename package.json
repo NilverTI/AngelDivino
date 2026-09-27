@@ -1,0 +1,14 @@
+{
+  "name": "Angel Divino-app",
+  "version": "1.0.0",
+  "description": "Sistema de gestión Angel Divino PeruServer",
+  "private": true,
+  "scripts": {
+    "proxy": "node proxy/server.js",
+    "dev": "node --watch proxy/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

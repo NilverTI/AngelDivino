@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/trucky/:path*",
+      "destination": "/api/proxy?type=trucky&path=:path*"
+    },
+    {
+      "source": "/api/trucky-user/:path*",
+      "destination": "/api/proxy?type=trucky-user&path=:path*"
+    },
+    {
+      "source": "/api/mdcdev/:path*",
+      "destination": "https://api.mdcdev.me/v2/peruserver/trucky/:path*"
+    },
+    {
+      "source": "/api/osrm/:path*",
+      "destination": "https://router.project-osrm.org/route/v1/driving/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}

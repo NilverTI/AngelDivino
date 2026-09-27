@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Fotos | Angel Divino PeruServer</title>
+    <meta name="description"
+        content="Galería de fotos de Angel Divino PeruServer: comunidad peruana de Euro Truck Simulator 2.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#6b3fa0">
+    <link rel="shortcut icon" href="../assets/img/icons/icon.webp" type="image/webp">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/base/styles.css?v=19">
+</head>
+
+<body data-page="galeria">
+    <div id="siteHeader"></div>
+
+    <main class="page-main-pad">
+        <section class="section galeria-section reveal" id="galeria" style="min-height: calc(100vh - 300px);">
+            <div class="container">
+                <div class="about-intro" style="text-align: center; margin-bottom: 3rem;">
+                    <p class="chip" style="margin: 0 auto 1rem;">Imágenes</p>
+                    <h2 class="about-title">
+                        Nuestra
+                        <span class="about-title-highlight">Galería</span>
+                    </h2>
+                    <p class="about-copy" style="max-width: 600px; margin: 0 auto 1.5rem;">
+                        Explora la experiencia de transporte interprovincial de Angel Divino PeruServer. Momentos
+                        inolvidables en las rutas del Perú.
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button id="openUploadModalBtn" class="btn-secondary"
+                        style="padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 8px; display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                            </path>
+                        </svg>
+                        Subir (Login)
+                    </button>
+                </div>
+
+                <div class="galeria-grid" id="galeriaGrid">
+                    <!-- Las imágenes se cargarán dinámicamente desde Supabase -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="siteFooter"></div>
+
+    <!-- Lightbox Modal -->
+    <aside id="lightboxModal" class="lightbox-modal" aria-hidden="true">
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-content">
+            <button id="lightboxPrev" class="lightbox-btn lightbox-prev" aria-label="Imagen anterior">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <div class="lightbox-wrapper">
+                <img id="lightboxImage" src="" alt="Vista ampliada" class="lightbox-img-full">
+            </div>
+
+            <button id="lightboxNext" class="lightbox-btn lightbox-next" aria-label="Siguiente imagen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+            <button id="lightboxClose" class="lightbox-btn lightbox-close" aria-label="Cerrar visor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Upload Modal -->
+    <aside id="uploadModal" class="upload-modal" aria-hidden="true">
+        <div class="upload-backdrop"></div>
+        <div class="upload-box">
+            <div class="upload-header">
+                <h3 id="uploadModalTitle">Aportar a Galería</h3>
+                <button id="closeUploadModal" class="upload-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="upload-body">
+                <input type="hidden" id="editImageId" value="">
+                
+                <div class="upload-input-group">
+                    <label for="uploadUrlInput">Enlaza la foto vía URL (*)</label>
+                    <input type="url" id="uploadUrlInput" class="upload-input" placeholder="https://ejemplo.com/foto.jpg">
+                    
+                    <label for="uploadDescInput">Descripción / Título (*)</label>
+                    <textarea id="uploadDescInput" class="upload-textarea" placeholder="Añade una descripción de la imagen..." required></textarea>
+                    
+                    <small style="color: #888; font-size: 0.75rem;">(*) Ingresa una URL de imagen válida y una descripción obligatoria.</small>
+                </div>
+                
+                <div class="upload-preview hidden" id="uploadPreview" style="margin-top: 15px;">
+                    <img id="previewImage" src="" alt="Vista previa">
+                    <button class="remove-preview" id="removePreview" aria-label="Remover imagen">&times;</button>
+                </div>
+            </div>
+            <div class="upload-footer">
+                <button id="submitUploadBtn" class="btn-primary upload-submit-btn" disabled>Publicar Imágen</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Login Modal -->
+    <aside id="loginModal" class="login-modal" aria-hidden="true">
+        <div class="login-backdrop"></div>
+        <div class="login-box">
+            <button id="closeLoginModal" class="login-close" aria-label="Cerrar modal">&times;</button>
+            <div class="login-avatar">
+                <img src="../assets/img/default-avatar.svg" alt="Avatar">
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="login-input-group">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                </div>
+                <div class="login-input-group">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn-primary login-submit-btn">Entrar</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Libro de Reclamaciones -->
+    <div id="lbrWidget" class="lbr-widget">
+        <div id="lbrTooltip" class="lbr-tooltip" role="status" aria-hidden="true">
+            <span class="lbr-tooltip-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5v-12ZM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 0 1.5-1.5v-12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 19c0 .6.4 1 1 1s1-.4 1-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <div class="lbr-tooltip-body">
+                <p class="lbr-tooltip-title">Libro de Reclamaciones</p>
+                <p class="lbr-tooltip-text">Aún estamos trabajando en ello. ¡Muy pronto estará disponible!</p>
+                <span class="lbr-tooltip-badge">Próximamente</span>
+            </div>
+            <button id="lbrTooltipCloseBtn" class="lbr-tooltip-close" type="button" aria-label="Cerrar aviso">&times;</button>
+        </div>
+        <button id="lbrToggleBtn" class="lbr-toggle-btn" type="button" aria-label="Libro de reclamaciones: en construcción" aria-controls="lbrTooltip">
+            <img src="../assets/img/lbr.webp" alt="Libro de Reclamaciones">
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/core/supabase-client.js?v=2" defer></script>
+    <script src="../js/core/utils.js?v=10" defer></script>
+    <script src="../js/core/api.js?v=11" defer></script>
+    <script src="../js/modules/lbr.js?v=3" defer></script>
+    <script src="../js/services/truckyService.js?v=16" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+    <script src="../js/modules/rutas.js?v=10" defer></script>
+    <script src="../js/modules/trabajadores.js?v=11" defer></script>
+    <script src="../js/modules/ranking.js?v=10" defer></script>
+    <script src="../js/modules/galeria.js?v=1" defer></script>
+    <script src="../js/modules/main.js?v=19" defer></script>
+</body>
+
+</html>
