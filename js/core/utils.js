@@ -133,6 +133,21 @@ window.AppUtils = (() => {
         return toNumber(job?.driven_distance_km ?? job?.driven_distance);
     }
 
+    /**
+     * Escapa texto para insertarlo en HTML (nombres, ciudades, etc. vienen de Trucky).
+     * Evita que caracteres como " < > rompan la pagina o inyecten codigo.
+     * @param {*} value - Texto a escapar
+     * @returns {string}
+     */
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
     // ============================================
     // EXPORTS
     // ============================================
@@ -141,6 +156,9 @@ window.AppUtils = (() => {
         // Constantes
         LIMA_TIME_ZONE,
         IN_PROGRESS_STATUSES,
+
+        // Seguridad
+        escapeHtml,
 
         // Fecha
         daysAgoIso,

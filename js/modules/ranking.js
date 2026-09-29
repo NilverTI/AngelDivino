@@ -61,11 +61,11 @@ window.RankingModule = ((AppUtils) => {
                     <span class="rank-badge">${getRankBadge(index)}</span>
                     <img
                         class="rank-avatar"
-                        src="${row.avatar || DEFAULT_AVATAR}"
-                        alt="Avatar de ${row.name}"
+                        src="${AppUtils.escapeHtml(row.avatar || DEFAULT_AVATAR)}"
+                        alt="Avatar de ${AppUtils.escapeHtml(row.name)}"
                         onerror="this.src='${DEFAULT_AVATAR}'"
                     >
-                    <strong class="ranking-name">${row.name}</strong>
+                    <strong class="ranking-name">${AppUtils.escapeHtml(row.name)}</strong>
                 </div>
                 <span class="rank-km">${AppUtils.formatNumber(safeKm)} km</span>
             `;

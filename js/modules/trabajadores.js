@@ -150,7 +150,7 @@ window.WorkersModule = ((AppUtils) => {
                 const date = AppUtils.formatDate(job.startedAt || new Date());
                 return `
                     <li>
-                        <strong>${job.origin} - ${job.destination}</strong>
+                        <strong>${AppUtils.escapeHtml(job.origin)} - ${AppUtils.escapeHtml(job.destination)}</strong>
                         <small>${date} | ${AppUtils.formatNumber(km)} km | <span class="trucky-level">En curso</span></small>
                     </li>
                 `;
@@ -214,8 +214,8 @@ window.WorkersModule = ((AppUtils) => {
                 const date = AppUtils.formatDate(job.completedAt || job.startedAt);
                 return `
                     <li>
-                        <strong>${job.origin} - ${job.destination}</strong>
-                        <small>${date} | ${AppUtils.formatNumber(km)} km | ${job.status}</small>
+                        <strong>${AppUtils.escapeHtml(job.origin)} - ${AppUtils.escapeHtml(job.destination)}</strong>
+                        <small>${date} | ${AppUtils.formatNumber(km)} km | ${AppUtils.escapeHtml(job.status)}</small>
                     </li>
                 `;
             }).join("");
@@ -255,10 +255,10 @@ window.WorkersModule = ((AppUtils) => {
 
         modalBody.innerHTML = `
             <div class="modal-head">
-                <img src="${member.avatar}" alt="Avatar de ${member.name}" onerror="this.src='${DEFAULT_AVATAR}'">
+                <img src="${AppUtils.escapeHtml(member.avatar)}" alt="Avatar de ${AppUtils.escapeHtml(member.name)}" onerror="this.src='${DEFAULT_AVATAR}'">
                 <div>
-                    <h3>${member.name}${roleClass === "role-admin" ? ' <span class="crown-icon">👑</span>' : ''}</h3>
-                    <p><span class="role-label ${roleClass}">${member.role}</span> | Ruta asignada: ${routeAssigned}</p>
+                    <h3>${AppUtils.escapeHtml(member.name)}${roleClass === "role-admin" ? ' <span class="crown-icon">👑</span>' : ''}</h3>
+                    <p><span class="role-label ${roleClass}">${AppUtils.escapeHtml(member.role)}</span> | Ruta asignada: ${AppUtils.escapeHtml(routeAssigned)}</p>
                 </div>
             </div>
             <div class="modal-grid">
@@ -288,7 +288,7 @@ window.WorkersModule = ((AppUtils) => {
                 </article>
                 <article class="modal-metric">
                     <p>Rango</p>
-                    <strong class="role-label ${roleClass}">${member.role}</strong>
+                    <strong class="role-label ${roleClass}">${AppUtils.escapeHtml(member.role)}</strong>
                 </article>
             </div>
             <ul class="history-list">
@@ -343,14 +343,14 @@ window.WorkersModule = ((AppUtils) => {
             card.className = "worker-card";
             card.innerHTML = `
                 <div class="worker-top">
-                    <img src="${member.avatar}" alt="Avatar de ${member.name}" onerror="this.src='${DEFAULT_AVATAR}'">
+                    <img src="${AppUtils.escapeHtml(member.avatar)}" alt="Avatar de ${AppUtils.escapeHtml(member.name)}" onerror="this.src='${DEFAULT_AVATAR}'">
                     <div>
-                        <h3>${member.name}${isAdmin ? ' <span class="crown-icon">👑</span>' : ''}</h3>
-                        <p class="role-label ${roleClass}">${member.role}</p>
+                        <h3>${AppUtils.escapeHtml(member.name)}${isAdmin ? ' <span class="crown-icon">👑</span>' : ''}</h3>
+                        <p class="role-label ${roleClass}">${AppUtils.escapeHtml(member.role)}</p>
                     </div>
                 </div>
                 <div class="worker-stats">
-                    <div class="worker-stat"><span>Ruta</span><span>${route}</span></div>
+                    <div class="worker-stat"><span>Ruta</span><span>${AppUtils.escapeHtml(route)}</span></div>
                     <div class="worker-stat"><span>Nivel Trucky</span><span class="trucky-level">${truckyLevel}</span></div>
                     <div class="worker-stat"><span>KM del mes</span><span>${AppUtils.formatNumber(monthKm)} km</span></div>
                     <div class="worker-stat"><span>Distancia total</span><span>${AppUtils.formatNumber(totalDistanceKm)} km</span></div>

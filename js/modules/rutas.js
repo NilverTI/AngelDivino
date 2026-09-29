@@ -681,13 +681,15 @@ window.RoutesModule = ((AppUtils) => {
         const referenceDate = getRouteReferenceDate(route);
         const dateLabel = AppUtils.formatDate(referenceDate);
         const statusLabel = route.status === "completed" ? "Completado" : "En progreso";
-        const publicUrl = route.publicUrl && route.publicUrl !== "#" ? route.publicUrl : null;
+        // Solo enlaces https (el valor viene de Trucky)
+        const publicUrl = /^https:\/\//i.test(String(route.publicUrl || "")) ? route.publicUrl : null;
+        const esc = AppUtils.escapeHtml;
 
         body.innerHTML = `
             <div class="modal-head route-modal-head">
                 <div>
-                    <h3>${route.origin} → ${route.destination}</h3>
-                    <p>Conductor: ${route.driverName}</p>
+                    <h3>${esc(route.origin)} → ${esc(route.destination)}</h3>
+                    <p>Conductor: ${esc(route.driverName)}</p>
                 </div>
             </div>
             <div class="modal-grid">
@@ -709,20 +711,20 @@ window.RoutesModule = ((AppUtils) => {
                 </article>
                 <article class="modal-metric">
                     <p>Origen</p>
-                    <strong>${route.origin}</strong>
+                    <strong>${esc(route.origin)}</strong>
                 </article>
                 <article class="modal-metric">
                     <p>Destino</p>
-                    <strong>${route.destination}</strong>
+                    <strong>${esc(route.destination)}</strong>
                 </article>
                 <article class="modal-metric">
                     <p>Daño (Camión / Carga)</p>
                     <strong style="${route.vehicleDamage > 0 || route.trailersDamage > 0 ? 'color: #dc2626;' : 'color: #16a34a;'}">
-                        ${route.vehicleDamage}% / ${route.trailersDamage}%
+                        ${AppUtils.toNumber(route.vehicleDamage)}% / ${AppUtils.toNumber(route.trailersDamage)}%
                     </strong>
                 </article>
             </div>
-            ${publicUrl ? `<p class="modal-route-link"><a href="${publicUrl}" target="_blank" rel="noopener noreferrer">Ver viaje en Trucky</a></p>` : ""}
+            ${publicUrl ? `<p class="modal-route-link"><a href="${esc(publicUrl)}" target="_blank" rel="noopener noreferrer">Ver viaje en Trucky</a></p>` : ""}
         `;
 
         modal.classList.add("open");
@@ -832,11 +834,11 @@ window.RoutesModule = ((AppUtils) => {
             item.innerHTML = `
                 <span class="route-trip-main">
                     <h4 class="route-trip-cities">
-                        <span class="city-name">${route.origin}</span>
+                        <span class="city-name">${AppUtils.escapeHtml(route.origin)}</span>
                         <span class="city-arrow">→</span>
-                        <span class="city-name">${route.destination}</span>
+                        <span class="city-name">${AppUtils.escapeHtml(route.destination)}</span>
                     </h4>
-                    <p class="route-trip-meta">${AppUtils.formatNumber(route.distanceKm)} km · Conductor: ${route.driverName}</p>
+                    <p class="route-trip-meta">${AppUtils.formatNumber(route.distanceKm)} km · Conductor: ${AppUtils.escapeHtml(route.driverName)}</p>
                 </span>
                 <span class="route-trip-km">${AppUtils.formatNumber(route.kmDriven)} km</span>
             `;
@@ -933,8 +935,9 @@ window.RoutesModule = ((AppUtils) => {
                     })
                 });
 
-                originMarker.bindTooltip(`Origen: ${route.origin}`).addTo(mapState.markerLayerGroup);
-                destMarker.bindTooltip(`Destino: ${route.destination} (${route.driverName})`).addTo(mapState.markerLayerGroup);
+                // Leaflet interpreta el tooltip como HTML: escapar los datos de Trucky
+                originMarker.bindTooltip(`Origen: ${AppUtils.escapeHtml(route.origin)}`).addTo(mapState.markerLayerGroup);
+                destMarker.bindTooltip(`Destino: ${AppUtils.escapeHtml(route.destination)} (${AppUtils.escapeHtml(route.driverName)})`).addTo(mapState.markerLayerGroup);
 
                 // Eventos Leaflet
                 routeLayer.on('click', handleSelect);
