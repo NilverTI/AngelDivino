@@ -20,6 +20,9 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
     const AUTO_REFRESH_MS = 10 * 60 * 1000; // Trucky limita peticiones: actualizar cada 10 min
     const HERO_CAROUSEL_INTERVAL_MS = 7000;
     const STATS_SNAPSHOT_KEY = "Angel Divino:stats-snapshot:v2";
+    // Nombre de marca con sus colores: "Angel" morado + "Divino" celeste
+    const BRAND_NAME_HTML = '<span class="brand-name"><span class="brand-angel">Angel</span> <span class="brand-divino">Divino</span></span>';
+    const PARTIALS_VERSION = "2"; // subir al cambiar html/*.html
     const DISCLAIMER_KEY = "Angel Divino:disclaimer-dismissed:v1";
 
     const NAV_ITEMS = [
@@ -142,7 +145,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
                                         <img src="${basePath}assets/img/lbr.webp" alt="Libro de Reclamaciones" style="height: 50px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                                     </a>
                                 </div>
-                                <p class="footer-copy" style="margin-top: 1rem;"><strong>2026 Copyright Angel Divino - Desarrollado por <a class="footer-accent footer-dev-link" href="https://nilverti.de/" target="_blank" rel="noopener noreferrer">NILVER T.I</a></strong></p>
+                                <p class="footer-copy" style="margin-top: 1rem;"><strong>2026 Copyright ${BRAND_NAME_HTML} - Desarrollado por <a class="footer-accent footer-dev-link" href="https://nilverti.de/" target="_blank" rel="noopener noreferrer">NILVER T.I</a></strong></p>
                                 <p ></p>
                             </div>
                             <div class="footer-right">
@@ -168,7 +171,8 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
             if (!path) return;
 
             try {
-                const response = await fetch(path, { headers: { Accept: "text/html" } });
+                // ?v= evita que el navegador muestre una version vieja de la seccion
+                const response = await fetch(`${path}?v=${PARTIALS_VERSION}`, { headers: { Accept: "text/html" } });
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 host.innerHTML = await response.text();
             } catch (error) {
@@ -337,7 +341,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
         if (bestRank > 0) {
             heroRank.textContent = `#${bestRank}`;
             centerRank.textContent = String(bestRank);
-            title.textContent = "Reconocimiento oficial a Angel Divino";
+            title.innerHTML = `Reconocimiento oficial a ${BRAND_NAME_HTML}`;
             subtitle.textContent = monthlyDistanceKm > 0
                 ? `${AppUtils.formatNumber(monthlyDistanceKm)} km este mes (${monthlyPercentVsLeader.toFixed(1)}% del #1).`
                 : "Posicion validada en ranking oficial de empresas.";
@@ -1108,10 +1112,10 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
     </div>
 
     <div class="disclaimer-content">
-        <p class="disclaimer-text"><strong>Esta NO es la web oficial de Angel Divino.</strong></p>
+        <p class="disclaimer-text"><strong>Esta NO es la web oficial de ${BRAND_NAME_HTML}.</strong></p>
 
         <p class="disclaimer-text">
-            La web oficial de Angel Divino es: <br>
+            La web oficial de ${BRAND_NAME_HTML} es: <br>
             <a href="https://www.Angel Divino.pe/" target="_blank" rel="noopener noreferrer" class="disclaimer-link">
                 https://www.Angel Divino.pe/
             </a>

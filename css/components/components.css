@@ -94,17 +94,33 @@
     background: linear-gradient(120deg, rgba(31, 199, 182, 0.34), rgba(107, 63, 160, 0.42));
 }
 
-.hero h1 span,
 .about-title-highlight {
     color: var(--teal);
-    background: linear-gradient(120deg, var(--teal) 10%, #8f6fd8 90%);
+    background: var(--brand-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.about-title-highlight {
-    background-image: var(--brand-gradient);
+/* Nombre de marca: "Angel" morado + "Divino" celeste (como el logo) */
+.brand-name {
+    white-space: nowrap;
+}
+
+.brand-angel {
+    color: var(--purple);
+}
+
+.brand-divino {
+    color: var(--teal);
+}
+
+/* En fondos oscuros el morado se aclara un poco para que se lea */
+.hero .brand-angel,
+.footer .brand-angel,
+.disclaimer-card .brand-angel,
+.psv-cert-card .brand-angel {
+    color: #a47ee6;
 }
 
 .btn-primary {
@@ -991,6 +1007,56 @@ h6 {
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+}
+
+/* Botón de Discord en el panel de postulación */
+.coming-soon-discord {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #e7e2f3;
+    width: min(100%, 420px);
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+}
+
+.coming-soon-discord-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.btn-discord {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: 14px;
+    background: #5865f2;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 10px 22px rgba(88, 101, 242, 0.32);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-discord svg {
+    width: 22px;
+    height: 22px;
+}
+
+.btn-discord:hover {
+    background: #4752c4;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(88, 101, 242, 0.4);
+}
+
+.btn-discord:focus-visible {
+    outline: 3px solid rgba(88, 101, 242, 0.45);
+    outline-offset: 3px;
 }
 
 .google-form-wrap {

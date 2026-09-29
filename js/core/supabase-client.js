@@ -9,8 +9,9 @@ const SUPABASE_SESSION_LIMIT_MS = 10 * 60 * 1000;
 const SUPABASE_LAST_ACTIVITY_KEY = "Angel Divino:supabase:last-activity";
 const SUPABASE_ACTIVITY_THROTTLE_MS = 15000;
 const SUPABASE_SESSION_KEY_PREFIX = "sb-";
-const Angel Divino_HEAVY_CACHE_KEYS = [
-    "Angel Divino:user-totals:v2",
+const ANGEL_DIVINO_HEAVY_CACHE_KEYS = [
+    "Angel Divino:user-totals:v3",
+    "Angel Divino:osrm-routes:v2",
     "Angel Divino:company-data:v4",
     "Angel Divino:month-cache:v2",
     "Angel Divino:totals-cache:v4",
@@ -44,13 +45,13 @@ function isQuotaExceededError(error) {
     );
 }
 
-function pruneAngel DivinoHeavyCaches() {
+function pruneAngelDivinoHeavyCaches() {
     const localStorageArea = getStorageArea("localStorage");
     if (!localStorageArea) return false;
 
     let removedAnyKey = false;
 
-    Angel Divino_HEAVY_CACHE_KEYS.forEach((cacheKey) => {
+    ANGEL_DIVINO_HEAVY_CACHE_KEYS.forEach((cacheKey) => {
         try {
             if (localStorageArea.getItem(cacheKey) !== null) {
                 localStorageArea.removeItem(cacheKey);
@@ -132,11 +133,11 @@ function createSupabaseStorageAdapter() {
                     return;
                 }
             } catch (error) {
-                const shouldPruneAngel DivinoCaches =
+                const shouldPruneAngelDivinoCaches =
                     isQuotaExceededError(error) &&
                     key.startsWith(SUPABASE_SESSION_KEY_PREFIX);
 
-                if (shouldPruneAngel DivinoCaches && pruneAngel DivinoHeavyCaches()) {
+                if (shouldPruneAngelDivinoCaches && pruneAngelDivinoHeavyCaches()) {
                     try {
                         if (tryWrite(localStorageArea, key, value)) {
                             clearStorageKeyFromOtherBackends(localStorageArea, key, sessionStorageArea);
@@ -288,7 +289,7 @@ function recordSupabaseSessionActivity(force = false) {
 }
 
 function bindSupabaseActivityListeners() {
-    if (window.__Angel DivinoSupabaseActivityBound) {
+    if (window.__AngelDivinoSupabaseActivityBound) {
         return;
     }
 
@@ -314,7 +315,7 @@ function bindSupabaseActivityListeners() {
         scheduleSupabaseSessionExpiry();
     });
 
-    window.__Angel DivinoSupabaseActivityBound = true;
+    window.__AngelDivinoSupabaseActivityBound = true;
 }
 
 try {
