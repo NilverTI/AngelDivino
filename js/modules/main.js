@@ -108,7 +108,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
                 <header class="navbar" id="top">
                     <div class="container navbar-content">
                         <a class="brand" href="${isGaleria ? '../index.html#inicio' : '/#inicio'}">
-                            <img class="brand-logo" src="${basePath}assets/img/logo.png" alt="Movil Bus">
+                            <img class="brand-logo" src="${basePath}assets/img/logo.png" alt="Angel Divino">
                         </a>
                         <div class="nav-actions">
                             <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menu" aria-controls="siteNav" aria-expanded="false">
@@ -337,7 +337,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
         if (bestRank > 0) {
             heroRank.textContent = `#${bestRank}`;
             centerRank.textContent = String(bestRank);
-            title.textContent = "Reconocimiento oficial a Movil Bus";
+            title.textContent = "Reconocimiento oficial a Angel Divino";
             subtitle.textContent = monthlyDistanceKm > 0
                 ? `${AppUtils.formatNumber(monthlyDistanceKm)} km este mes (${monthlyPercentVsLeader.toFixed(1)}% del #1).`
                 : "Posicion validada en ranking oficial de empresas.";
@@ -1174,7 +1174,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
         WorkersModule.setupModalEvents();
 
         if (isGalleryPage) {
-            console.info("Movil Bus galeria inicializada sin sincronizacion pesada.");
+            console.info("Angel Divino galeria inicializada sin sincronizacion pesada.");
             return;
         }
 
@@ -1221,7 +1221,7 @@ window.AppMain = ((AppUtils, TruckyService, RoutesModule, WorkersModule, Ranking
             updateDataStatusFromPayload(livePayload, "Datos actualizados.", false);
 
             bindTotalsRefresh(livePayload.totalsRefreshPromise);
-            console.info(`Movil Bus sincronizado con datos: ${state.source}`);
+            console.info(`Angel Divino sincronizado con datos: ${state.source}`);
         } catch (error) {
             console.warn("No se pudo cargar la API en vivo:", error);
             if (cachedPayload) {
